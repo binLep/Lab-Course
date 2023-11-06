@@ -260,7 +260,7 @@ scapya.sniff(iface=g_iface, prn=func_pkt)
 
 注：此处的 scapya 来源于 `import scapy.all as scapya`
 
-![[../../images/Task1.2-1.webp]]
+![](../../images/Task1.2-1.webp)
 
 虽然该代码可以接收我的案例脚本所发的 ICMP 请求包并返回，但是落实在实际的 ping 命令中就会爆出错误，如下
 
@@ -278,7 +278,7 @@ Sent 1 packets.
 
 抓包得出如下结果
 
-![[../../images/Task1.2-2.png]]
+![](../../images/Task1.2-2.png)
 
 ### 第二次尝试
 
