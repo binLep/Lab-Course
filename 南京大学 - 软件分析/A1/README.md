@@ -17,16 +17,16 @@
 
 $$
 \begin{array}{l}
-IN[exit]\enspace=\enspace\phi \\
-for(each\enspace basic\enspace block\enspace B\backslash exit)\enspace\{\\
+IN[exit]\enspace=\enspace\phi\\
+for(each\enspace basic\enspace block\enspace B\backslash exit)\lbrace\\
 \qquad IN[B]\enspace=\enspace \phi\\
-\}\\
-while(changes\enspace to\enspace any\enspace IN\enspace occur)\enspace\{\\
-\qquad for(each\enspace basic\enspace block\enspace B\backslash exit)\enspace\{\\
+\rbrace\\
+while(changes\enspace to\enspace any\enspace IN\enspace occur)\enspace\lbrace\\
+\qquad for(each\enspace basic\enspace block\enspace B\backslash exit)\enspace\lbrace\\
 \qquad \qquad OUT[B]\enspace=\enspace \cup_{S\enspace a\enspace successor\enspace of\enspace B}\enspace IN[S]\\
 \qquad \qquad IN[B]\enspace=\enspace use_{B}\enspace\cup\enspace(OUT[B]\enspace-\enspace def_{B})\\
-\qquad \}\\
-\}
+\qquad \rbrace\\
+\rbrace
 \end{array}
 $$
 

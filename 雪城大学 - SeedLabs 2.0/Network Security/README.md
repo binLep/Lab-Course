@@ -2,7 +2,7 @@
 
 | 进度 | 实现内容 | 完成日期 |
 | :--: | :-- | :--: |
-| × | [Packet Sniffing and Spoofing Lab](./Packet%20Sniffing%20and%20Spoofing%20Lab/RAEDME.md) | NULL |
+| - | [Packet Sniffing and Spoofing Lab](./Packet%20Sniffing%20and%20Spoofing%20Lab/README.md) | NULL |
 | × | ARP Cache Poisoning Attack Lab | NULL |
 | × | ICMP Redirect Attack Lab | NULL |
 | × | TCP Attacks Lab | NULL |
