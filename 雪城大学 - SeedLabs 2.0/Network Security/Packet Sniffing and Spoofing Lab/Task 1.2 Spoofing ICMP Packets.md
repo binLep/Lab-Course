@@ -1,164 +1,4 @@
-## Task 1.1: Sniffing Packets
-
-### Task 1.1A
-
-启动 Docker 后，docker-compose 会建立好配置文件内的网络拓扑
-
-该任务中我们要展示 ip 为 `10.9.0.1` 的网卡接口（此处网卡接口名为 br-2013ee70fe72）的嗅探信息
-
-使用 root 权限执行如下代码即可
-
-```python
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-from scapy.all import *
-
-
-def print_pkt(pkt):
-    pkt.show()
-
-
-sniff(iface="br-2013ee70fe72", prn=print_pkt)
-
-```
-
-用浏览器访问 `10.9.0.10`（该 ip 地址非活动 ip），可以得到如下信息，实验完毕
-
-```toml
-###[ Ethernet ]### 
-  dst       = ff:ff:ff:ff:ff:ff
-  src       = 02:42:66:ce:12:a2
-  type      = ARP
-###[ ARP ]### 
-     hwtype    = Ethernet (10Mb)
-     ptype     = IPv4
-     hwlen     = 6
-     plen      = 4
-     op        = who-has
-     hwsrc     = 02:42:66:ce:12:a2
-     psrc      = 10.9.0.1
-     hwdst     = 00:00:00:00:00:00
-     pdst      = 10.9.0.10
-```
-
-### Task 1.1B
-
-在嗅探的基础上，需要完成下面三个指标
-
-- B1：Capture only the ICMP packet.
-- B2：Capture any TCP packet that comes from a particular IP and with a destination port number 23.
-- B3：Capture packets comes from or to go to a particular subnet. You can pick any subnet, such as 128.230.0.0/16; you should not pick the subnet that your VM is attached to.
-
-#### B1
-
-**实现代码如下**
-
-```python
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-from scapy.all import *
-
-
-def print_pkt(pkt):
-    pkt.show()
-
-
-sniff(iface="br-2013ee70fe72", filter="icmp", prn=print_pkt)
-
-```
-
-**验证方式**
-
-先用浏览器访问 `http://10.9.0.5`，嗅探程序无回显
-
-之后执行命令 `ping -c 1 10.9.0.5`，可以看到嗅探回显如下
-
-```toml
-###[ Ethernet ]### 
-  dst       = 02:42:0a:09:00:05
-  src       = 02:42:66:ce:12:a2
-  type      = IPv4
-###[ IP ]### 
-     version   = 4
-     ihl       = 5
-     tos       = 0x0
-     len       = 84
-     id        = 12276
-     flags     = DF
-     frag      = 0
-     ttl       = 64
-     proto     = icmp
-     chksum    = 0xf69d
-     src       = 10.9.0.1
-     dst       = 10.9.0.5
-     \options   \
-###[ ICMP ]### 
-        type      = echo-request
-        code      = 0
-        chksum    = 0x416d
-        id        = 0x6
-        seq       = 0x1
-        unused    = ''
-###[ Raw ]### 
-           load      = 'e`Ge\x00\x00\x00\x00=\\xf3\r\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&\'()*+,-./01234567'
-```
-
-## B2
-
-**实现代码如下**
-
-```python
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-from scapy.all import *
-
-
-def print_pkt(pkt):
-    pkt.show()
-
-
-sniff(iface="br-2013ee70fe72", filter="tcp && src host 10.9.0.1 && dst port 23", prn=print_pkt)
-
-```
-
-**验证方式**
-
-执行命令 `nc 10.9.0.5 23`
-
-```toml
-###[ Ethernet ]### 
-  dst       = 02:42:0a:09:00:05
-  src       = 02:42:66:ce:12:a2
-  type      = IPv4
-###[ IP ]### 
-     version   = 4
-     ihl       = 5
-     tos       = 0x0
-     len       = 60
-     id        = 25876
-     flags     = DF
-     frag      = 0
-     ttl       = 64
-     proto     = tcp
-     chksum    = 0xc190
-     src       = 10.9.0.1
-     dst       = 10.9.0.5
-     \options   \
-###[ TCP ]### 
-        sport     = 59292
-        dport     = telnet
-        seq       = 4183056894
-        ack       = 0
-        dataofs   = 10
-        reserved  = 0
-        flags     = S
-        window    = 64240
-        chksum    = 0x1446
-        urgptr    = 0
-        options   = [('MSS', 1460), ('SAckOK', b''), ('Timestamp', (3343438968, 0)), ('NOP', None), ('WScale', 7)]
-```
-
-## Task 1.2: Spoofing ICMP Packets
+## 前言
 
 该任务需要做的是当外来主机向你发送 ICMP 包的时候，总能显示匹配成功
 
@@ -198,7 +38,7 @@ ICMP 的发送接手源码可以参考一些开源内核项目的实现，例如
 - https://github.com/StevenBaby/onix/blob/dev/src/include/onix/net/icmp.h
 - https://elixir.bootlin.com/linux/latest/source/net/ipv4/icmp.c
 
-### 第一次尝试
+## 第一次尝试
 
 ```python
 #!/usr/bin/env python3
@@ -280,7 +120,7 @@ Sent 1 packets.
 
 ![](../../images/Task1.2-2.png)
 
-### 第二次尝试
+## 第二次尝试
 
 后来比对数据包发现，我的 icmp-reply 请求里少了 Raw 的字段，也就是时间戳和消息，补上后如下所示
 
@@ -372,7 +212,9 @@ From 192.168.1.10 icmp_seq=3 Destination Host Unreachable
 rtt min/avg/max/mdev = 35.226/39.589/41.937/3.088 ms, pipe 3
 ```
 
-### 第三次尝试
+## 第三次尝试
+
+### 思路
 
 其实第二次尝试就已经完成了 ICMP 的伪造，只是 Scapy 嗅探数据包时不会干扰主机的 IP 栈，不能丢弃任意数据包
 
@@ -388,11 +230,82 @@ rtt min/avg/max/mdev = 35.226/39.589/41.937/3.088 ms, pipe 3
 
 最方便添加处理的网卡接口是 lo 接口，毕竟人家常年用 127.0.0.1
 
+### 脚本
+
 ```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import scapy.all as scapya
+import binascii
+import pyroute2
+import socket
+import fcntl
+import time
+
+SIOCGIFNETMASK = 0x891b
+g_iface = "br-2013ee70fe72"
+# 该样例子网掩码的获取方式：不发送 ICMP 请求源 IP 地址的子网掩码，仅从绑定的网卡接口粗略判断
+g_subnet_mask: str = socket.inet_ntoa(fcntl.ioctl(socket.socket(socket.AF_INET, socket.SOCK_DGRAM), SIOCGIFNETMASK, g_iface.encode().ljust(0x100, b'\x00'))[20:24])
+g_mask: int = socket.ntohl(int(binascii.hexlify(socket.inet_aton(g_subnet_mask)), 16))
+# new ideas
+configured_ips = []
+ipr = pyroute2.IPRoute()
+
+
+# 判断是否为广播地址
+def ip_addr_isbroadcast(_ip: str) -> bool:
+    _a: int = socket.ntohl(int(binascii.hexlify(socket.inet_aton(_ip)), 16))
+    return (_a == 0xffffffff) or (_a == 0) or ((_a & ~g_mask) == (0xffffffff & (~g_mask)))
+
+
+# 判断是否为组播地址
+def ip_addr_ismulticast(_ip: str) -> bool:
+    _a: int = socket.ntohl(int(binascii.hexlify(socket.inet_aton(_ip)), 16))
+    return (_a & socket.ntohl(0xF0000000)) == socket.ntohl(0xE0000000)
+
+
+def add_interface_ip(interface_name, ip_address):
+    interface_index_id = ipr.link_lookup(ifname=interface_name)[0]
+    ipr.addr("add", index=interface_index_id, address=ip_address, prefixlen=32)
+
+
+def delete_interface_ip(interface_name, ip_address):
+    interface_index_id = ipr.link_lookup(ifname=interface_name)[0]
+    ipr.addr("delete", index=interface_index_id, address=ip_address, prefixlen=32)
+
+
+def cleanup_ips(interface_name):
+    interface_index_id = ipr.link_lookup(ifname=interface_name)[0]
+    interface_addresses = ipr.get_addr(index=interface_index_id, family=2)
+    for address in interface_addresses:
+        ip = address.get_attrs("IFA_ADDRESS")[0]
+        if ip != "127.0.0.1":
+            print("Cleanup - Deleting IP address %s from interface %s" % (ip, interface_name))
+            delete_interface_ip(interface_name, ip)
+
+
+def func_pkt(pkt):
+    sig = "%-18f " % (time.time())
+    # 判断是否为发送 echo-request 的 ICMP 报文
+    if pkt.haslayer(scapya.ICMP) and pkt[0][2].type == 8:
+        dst = pkt[0][1].dst
+        if ip_addr_isbroadcast(dst):
+            print(sig + pkt.summary() + " (broadcast)")
+        elif ip_addr_ismulticast(dst):
+            print(sig + pkt.summary() + " (multicast)")
+        elif dst not in configured_ips:
+                src = pkt[0][1].src
+                configured_ips.append(dst)
+                print("Received an ICMP echo request from source %s with a destination of %s" % (src, dst))
+                add_interface_ip("lo", dst)
+    else:
+        print(sig + pkt.summary())
+
+
+scapya.sniff(iface=g_iface, prn=func_pkt)
+cleanup_ips("lo")
 
 ```
-
-
 
 ## 参考链接
 
