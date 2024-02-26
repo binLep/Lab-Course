@@ -2,12 +2,12 @@
 
 | 函数 | 文件路径 |
 | :-- | :-- |
-| void Solver.initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>) | analysis/dataflow/solver/Solver.java |
-| SetFact\<Var\> LiveVariableAnalysis.newInitialFact() | analysis/dataflow/analysis/LiveVariableAnalysis.java |
-| SetFact\<Var\> LiveVariableAnalysis.newBoundaryFact(CFG\<Stmt\>) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
-| void IterativeSolver.doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>) | analysis/dataflow/solver/IterativeSolver.java |
-| void LiveVariableAnalysis.meetInto(SetFact\<Var\>, SetFact\<Var\>) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
-| boolean LiveVariableAnalysis.transferNode(Stmt, SetFact\<Var\>, SetFact\<Var\>) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [void Solver.initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#Solver.initializeBackward) | analysis/dataflow/solver/Solver.java |
+| [SetFact\<Var\> LiveVariableAnalysis.newInitialFact()](#LiveVariableAnalysis.newInitialFact) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [SetFact\<Var\> LiveVariableAnalysis.newBoundaryFact(CFG\<Stmt\>)](#LiveVariableAnalysis.newBoundaryFact) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [void IterativeSolver.doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#IterativeSolver.doSolveBackward) | analysis/dataflow/solver/IterativeSolver.java |
+| [void LiveVariableAnalysis.meetInto(SetFact\<Var\>, SetFact\<Var\>)](#LiveVariableAnalysis.meetInto) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [boolean LiveVariableAnalysis.transferNode(Stmt, SetFact\<Var\>, SetFact\<Var\>)](#LiveVariableAnalysis.transferNode) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
 
 个人认为该 Lab 内容的难点并非在于思路，而是对项目代码的理解
 
@@ -18,15 +18,15 @@
 $$
 \begin{array}{l}
 IN[exit]\enspace=\enspace\phi\\
-for(each\enspace basic\enspace block\enspace B\backslash exit)\lbrace\\
+for(each\enspace basic\enspace block\enspace B\backslash exit)\enspace\lbrace\\
 \qquad IN[B]\enspace=\enspace \phi\\
 \rbrace\\
-while(changes\enspace to\enspace any\enspace IN\enspace occur)\enspace\lbrace\\
+do\enspace\lbrace\\
 \qquad for(each\enspace basic\enspace block\enspace B\backslash exit)\enspace\lbrace\\
 \qquad \qquad OUT[B]\enspace=\enspace \cup_{S\enspace a\enspace successor\enspace of\enspace B}\enspace IN[S]\\
 \qquad \qquad IN[B]\enspace=\enspace use_{B}\enspace\cup\enspace(OUT[B]\enspace-\enspace def_{B})\\
 \qquad \rbrace\\
-\rbrace
+\rbrace\enspace while(changes\enspace to\enspace any\enspace IN\enspace occur)
 \end{array}
 $$
 
