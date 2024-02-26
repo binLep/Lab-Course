@@ -72,14 +72,14 @@ $$
 
 | 函数 | 文件路径 |
 | :--- | :--- |
-| [class IterativeSolver\<Node, Fact\> extends Solver<Node, Fact>](#IterativeSolver（后续用\ Worklist\ 算法代替）) | analysis/dataflow/solver/IterativeSolver.java |
-| [CPFact ConstantPropagation.newBoundaryFact(CFG\<Stmt\>)](#ConstantPropagation.newBoundaryFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| [CPFact ConstantPropagation.newInitialFact()](#ConstantPropagation.newInitialFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| [void ConstantPropagation.meetInto\(CPFact, CPFact\)](#ConstantPropagation.meetInto) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| Value ConstantPropagation.meetValue\(Value, Value\) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| boolean ConstantPropagation.transferNode(Stmt, CPFact, CPFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| Value ConstantPropagation.evaluate(Exp, CPFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| class WorkListSolver\<Node, Fact\> extends Solver<Node, Fact> | analysis/dataflow/solver/WorkListSolver.java |
+| [class IterativeSolver\<Node, Fact\> extends Solver<Node, Fact>](#iterativesolver后续用-worklist-算法代替) | analysis/dataflow/solver/IterativeSolver.java |
+| [CPFact ConstantPropagation.newBoundaryFact(CFG\<Stmt\>)](#constantpropagationnewboundaryfact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [CPFact ConstantPropagation.newInitialFact()](#constantpropagationnewinitialfact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [void ConstantPropagation.meetInto\(CPFact, CPFact\)](#constantpropagationmeetinto) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [Value ConstantPropagation.meetValue\(Value, Value\)](#constantpropagationmeetvalue) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [boolean ConstantPropagation.transferNode(Stmt, CPFact, CPFact)](#constantpropagationtransfernode) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [Value ConstantPropagation.evaluate(Exp, CPFact)](#constantpropagationevaluate) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [class WorkListSolver\<Node, Fact\> extends Solver\<Node, Fact\>](#worklistsolver工作集算法) | analysis/dataflow/solver/WorkListSolver.java |
 
 ### IterativeSolver（后续用 Worklist 算法代替）
 
