@@ -1,12 +1,14 @@
+## 作业目录
+
 课程需要补齐一下几个函数，调用顺序从上到下依次排列
 
-| 函数 | 文件路径 |
-| :-- | :-- |
-| [void Solver.initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#solverinitializebackward) | analysis/dataflow/solver/Solver.java |
-| [SetFact\<Var\> LiveVariableAnalysis.newInitialFact()](#livevariableanalysisnewinitialfact) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
-| [SetFact\<Var\> LiveVariableAnalysis.newBoundaryFact(CFG\<Stmt\>)](#livevariableanalysisnewboundaryfact) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
-| [void IterativeSolver.doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#iterativesolverdosolvebackward) | analysis/dataflow/solver/IterativeSolver.java |
-| [void LiveVariableAnalysis.meetInto(SetFact\<Var\>, SetFact\<Var\>)](#livevariableanalysismeetinto) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| 函数                                                                                                                   | 文件路径                                                 |
+| :------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
+| [void Solver.initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#solverinitializebackward)               | analysis/dataflow/solver/Solver.java                 |
+| [SetFact\<Var\> LiveVariableAnalysis.newInitialFact()](#livevariableanalysisnewinitialfact)                          | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [SetFact\<Var\> LiveVariableAnalysis.newBoundaryFact(CFG\<Stmt\>)](#livevariableanalysisnewboundaryfact)             | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [void IterativeSolver.doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#iterativesolverdosolvebackward)   | analysis/dataflow/solver/IterativeSolver.java        |
+| [void LiveVariableAnalysis.meetInto(SetFact\<Var\>, SetFact\<Var\>)](#livevariableanalysismeetinto)                  | analysis/dataflow/analysis/LiveVariableAnalysis.java |
 | [boolean LiveVariableAnalysis.transferNode(Stmt, SetFact\<Var\>, SetFact\<Var\>)](#livevariableanalysistransfernode) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
 
 个人认为该 Lab 内容的难点并非在于思路，而是对项目代码的理解
@@ -29,6 +31,8 @@ do\enspace\lbrace\\
 \rbrace\enspace while(changes\enspace to\enspace any\enspace IN\enspace occur)
 \end{array}
 $$
+
+## 作业实现
 
 ### Solver.initializeBackward
 
@@ -54,8 +58,7 @@ protected void initializeBackward(CFG<Node> cfg, DataflowResult<Node, Fact> resu
         if(cfg.isExit(node)) {
             result.setInFact(node, this.analysis.newBoundaryFact(cfg));
             result.setOutFact(node, this.analysis.newBoundaryFact(cfg));
-        }
-        else {
+        } else {
             result.setInFact(node, this.analysis.newInitialFact());
             result.setOutFact(node, this.analysis.newInitialFact());
         }

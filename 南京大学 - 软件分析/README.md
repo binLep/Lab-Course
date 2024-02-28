@@ -8,17 +8,16 @@
 
 ## 课程进度
 
-| 进度 | 别名 | 实现内容 | 完成日期 |
-| :--: | :--: | :--- | :--: |
-| √ | [A1](./A1/README.md) | Live Variable Analysis and Iterative Solver | 2023/09/09 |
-| √ | [A2.1](./A2.1/README.md) | Constant Propagation and Worklist Solver | 2024/02/06 |
-| × | A3 | Dead Code Detection | NULL |
-| × | [A2.2](./A2.2/README.md) | Wrong answer solution about A2.1 （switch and loop） |  |
-| × | A4 | CHA and Interprocedural Constant Propagation | NULL |
-| × | A5 | Context-Insensitive Pointer Analysis | NULL |
-| × | A6 | Context-Sensitive Pointer Analysis | NULL |
-| × | A7 | Alias-Aware Interprocedural Constant Propagation | NULL |
-| × | A8 | Taint Analysis | NULL |
+| 进度  |          别名          | 实现内容                                             |    完成日期    |
+| :-: | :------------------: | :----------------------------------------------- | :--------: |
+|  √  | [A1](./A1/README.md) | Live Variable Analysis and Iterative Solver      | 2023/09/09 |
+|  √  | [A2](./A2/README.md) | Constant Propagation and Worklist Solver         | 2024/02/28 |
+|  ×  | [A3](./A3/README.md) | Dead Code Detection                              |    NULL    |
+|  ×  |          A4          | CHA and Interprocedural Constant Propagation     |    NULL    |
+|  ×  |          A5          | Context-Insensitive Pointer Analysis             |    NULL    |
+|  ×  |          A6          | Context-Sensitive Pointer Analysis               |    NULL    |
+|  ×  |          A7          | Alias-Aware Interprocedural Constant Propagation |    NULL    |
+|  ×  |          A8          | Taint Analysis                                   |    NULL    |
 
 ## 课程资源
 

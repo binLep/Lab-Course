@@ -29,16 +29,56 @@ foreach block in blocks do:
                 propPhiToRef(instr)
 ```
 
-## 作业实现
+## 作业目录
+
+其中部分函数在之前的作业中已有实现，该目录会添加已经实现的函数链接
+
+### 基础目录
 
 | 函数 | 文件路径 |
 | :--- | :--- |
-| CPFact ConstantPropagation.newBoundaryFact(CFG\<Stmt\>) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| CPFact ConstantPropagation.newInitialFact() | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| void ConstantPropagation.meetInto\(CPFact, CPFact\) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| Value ConstantPropagation.meetValue\(Value, Value\) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| boolean ConstantPropagation.transferNode(Stmt, CPFact, CPFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| Value ConstantPropagation.evaluate(Exp, CPFact) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
-| class WorkListSolver<Node, Fact> extends Solver<Node, Fact> | analysis/dataflow/solver/WorkListSolver.java |
+| [void initializeForward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](../A1/README.md#solverinitializeforward) | analysis/dataflow/solver/Solver.java |
+| [void initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](../A1/README.md#solverinitializebackward) | analysis/dataflow/solver/Solver.java |
+| [void doSolveForward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](南京大学%20-%20软件分析/A2/README.md#worklistsolver工作集算法) | analysis/dataflow/solver/WorkListSolver.java |
+| [void doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#worklistsolverdosolvebackward) | analysis/dataflow/solver/WorkListSolver.java |
 
+### 活跃变量分析目录
+
+| 函数                                                                                                                                  | 文件路径                                                 |
+| :---------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
+| [SetFact\<Var\> LiveVariableAnalysis.newInitialFact()](../A1/README.md#livevariableanalysisnewinitialfact)                          | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [SetFact\<Var\> LiveVariableAnalysis.newBoundaryFact(CFG\<Stmt\>)](../A1/README.md#livevariableanalysisnewboundaryfact)             | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [void LiveVariableAnalysis.meetInto(SetFact\<Var\>, SetFact\<Var\>)](../A1/README.md#livevariableanalysismeetinto)                  | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+| [boolean LiveVariableAnalysis.transferNode(Stmt, SetFact\<Var\>, SetFact\<Var\>)](../A1/README.md#livevariableanalysistransfernode) | analysis/dataflow/analysis/LiveVariableAnalysis.java |
+### 常量传播目录
+
+| 函数                                                                                                                  | 文件路径                                                          |
+| :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------ |
+| [ConstantPropagation.newBoundaryFact(CFG\<Stmt\>)](南京大学%20-%20软件分析/A2/README.md#constantpropagationnewboundaryfact)            | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [CPFact ConstantPropagation.newInitialFact()](南京大学%20-%20软件分析/A2/README.md#constantpropagationnewinitialfact)                  | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [void ConstantPropagation.meetInto\(CPFact, CPFact\)](南京大学%20-%20软件分析/A2/README.md#constantpropagationmeetinto)                | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [Value ConstantPropagation.meetValue\(Value, Value\)](南京大学%20-%20软件分析/A2/README.md#constantpropagationmeetvalue)               | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [boolean ConstantPropagation.transferNode(Stmt, CPFact, CPFact)](南京大学%20-%20软件分析/A2/README.md#constantpropagationtransfernode) | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+| [Value ConstantPropagation.evaluate(Exp, CPFact)](南京大学%20-%20软件分析/A2/README.md#constantpropagationevaluate)                    | analysis/dataflow/analysis/constprop/ConstantPropagation.java |
+
+## 作业实现
+
+### WorkListSolver.doSolveBackward
+
+```java
+@Override
+protected void doSolveBackward(CFG<Node> cfg, DataflowResult<Node, Fact> result) {
+    // TODO - finish me
+    Queue<Node> worklist = new LinkedList<>(cfg.getNodes());
+    while (!worklist.isEmpty()) {
+        Node node = worklist.poll();
+        for (Node succ : cfg.getSuccsOf(node)) {
+            this.analysis.meetInto(result.getInFact(node), result.getOutFact(succ));
+        }
+        if (this.analysis.transferNode(node, result.getInFact(node), result.getOutFact(node))) {
+            worklist.addAll(cfg.getPredsOf(node));
+        }
+    }
+}
+```
 
