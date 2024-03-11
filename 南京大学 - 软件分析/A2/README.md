@@ -306,6 +306,10 @@ public boolean transferNode(Stmt stmt, CPFact in, CPFact out) {
 }
 ```
 
+有的读者会有疑惑，之前在 A1 实验中，LiveVariableAnalysis 里要寻找的 def 要求之前没有被定义
+
+
+
 ### ConstantPropagation.evaluate
 
 判断变量、`int` 型常量以及二元表达式的方式，我们可以由作业中的该图得知
@@ -357,7 +361,7 @@ Op op = binaryExp.getOperator();
 
 还要注意判断 `UNDEF` 变量，`UNDEF` 和谁操作都是 `UNDEF`
 
-**注：重点来了，这里是我在 PASCOJ 上一直 WA 的原因，其实这里的意思是 `x / 0` 和 `x % 0` 都为 `UNDEF`，`x` 可以是 `NAC`，但也可能是其他表达式（EXP）**
+**注：重点来了，这里是我在 PASCAL OJ 上一直 WA 的原因，其实这里的意思是 `x / 0` 和 `x % 0` 都为 `UNDEF`，`x` 可以是 `NAC`，但也可能是其他表达式（EXP）**
 
 ```java
 public static Value evaluate(Exp exp, CPFact in) {
