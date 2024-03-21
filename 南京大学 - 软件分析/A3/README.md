@@ -17,7 +17,7 @@
 | [void initializeForward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](../A1/README.md#solverinitializeforward)   | analysis/dataflow/solver/Solver.java         |
 | [void initializeBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](../A1/README.md#solverinitializebackward) | analysis/dataflow/solver/Solver.java         |
 | [void doSolveForward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](../A2/README.md#worklistsolver工作集算法)          | analysis/dataflow/solver/WorkListSolver.java |
-| [void doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#worklistsolverdosolvebackward)              | analysis/dataflow/solver/WorkListSolver.java |
+| [\[新！\] void doSolveBackward(CFG\<Node\>, DataflowResult\<Node, Fact\>)](#worklistsolverdosolvebackward)       | analysis/dataflow/solver/WorkListSolver.java |
 
 ### 活跃变量分析目录
 
@@ -105,7 +105,7 @@ public Set<Stmt> analyze(IR ir) {
             if (value.isConstant()) {
                 boolean ifFlag = value.getConstant() != 0;
                 for (Edge<Stmt> edge : cfg.getOutEdgesOf(s)) {
-                    // 若是 `if` 语句为真，那么将真条件分支放入liveCode集合中，反之同理
+                    // 若是 `if` 语句为真，那么将真条件分支放入 worklist 集合中，反之同理
                     if ((edge.getKind() == Edge.Kind.IF_TRUE && ifFlag)
                             || (edge.getKind() == Edge.Kind.IF_FALSE && !ifFlag)) {
                         worklist.add(edge.getTarget());

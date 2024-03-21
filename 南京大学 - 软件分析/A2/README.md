@@ -39,7 +39,7 @@ $$
 
 ### 迭代算法公式
 
-由下方公式可以看出，$IN[B]\enspace-\enspace\lbrace(x, \_)\rbrace$ 其实只是判断有 $IN[B]$ 和 $OUT[B]$ 中是否有相同变量
+由下方公式可以看出，$IN[B]\enspace-\enspace\lbrace(x, \_)\rbrace$ 其实只是判断在 $IN[B]$ 和 $OUT[B]$ 中是否有相同变量
 
 若是有相同变量 key，那么就删除 Map 数据类型的 $IN[B]$ 中的 key 元素对象即可，但其实我们不用写删除这一步，只需要直接用 $gen_B$ 去更新 $IN[B]$ 即可
 
