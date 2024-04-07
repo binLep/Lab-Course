@@ -15,7 +15,7 @@
 |  √  | [A3](./A3/README.md) | Dead Code Detection                              | 2024/03/11 |
 |  √  | [A4](./A4/README.md) | CHA and Interprocedural Constant Propagation     | 2024/03/21 |
 |  √  | [A5](./A5/README.md) | Context-Insensitive Pointer Analysis             | 2024/04/06 |
-|  -  |          A6          | Context-Sensitive Pointer Analysis               |    NULL    |
+|  -  | [A6](./A6/README.md) | Context-Sensitive Pointer Analysis               |    NULL    |
 |  ×  |          A7          | Alias-Aware Interprocedural Constant Propagation |    NULL    |
 |  ×  |          A8          | Taint Analysis                                   |    NULL    |
 
