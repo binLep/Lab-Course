@@ -180,7 +180,7 @@ private void addReachable(JMethod method) {
 
 这是一个内部类，如下三个点对应了不同的 visit 处理函数（不同的重载类型）：
 
-- 【STAGE1】处理 New 和 Assign 表达式：实现 New、Copy 的类型重载
+- 【STAGE1】处理 New 和 Copy 表达式：实现 New、Copy 的类型重载
 - 【STAGE2】处理 Invoke 表达式中的 Static 函数：实现 Invoke 的类型重载
 - 【STAGE3】处理 LoadField 和 StoreField 表达式中的 Static 函数：实现 LoadField 和 StoreField 的类型重载
 
