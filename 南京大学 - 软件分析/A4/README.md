@@ -314,15 +314,8 @@ private void doSolve() {
     while (!workList.isEmpty()) {
         Node node = workList.poll();
         Set<ICFGEdge<Node>> inICFGEdges = icfg.getInEdgesOf(node);
-        for (Node pred : icfg.getPredsOf(node)) {
-            // transferEdge
-            for (ICFGEdge<Node> inICFGEdge : inICFGEdges) {
-                if (inICFGEdge.getSource().equals(pred)) {
-                    analysis.meetInto(analysis.transferEdge(inICFGEdge, result.getOutFact(pred)), result.getInFact(node));
-                    break;
-                }
-            }
-            // 不存在前驱节点和当前节点没有边的情况
+        for (ICFGEdge<Node> inICFGEdge : inICFGEdges) {
+            analysis.meetInto(analysis.transferEdge(inICFGEdge, result.getOutFact(inICFGEdge.getSource())), result.getInFact(node));
         }
         // transferNode: 需要判断是否有调用点
         if (analysis.transferNode(node, result.getInFact(node), result.getOutFact(node))) {
